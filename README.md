@@ -56,9 +56,12 @@ Figure by [cncf/tag-security](https://github.com/cncf/sig-security/)
       Sign and verify images to mitigate MITM attacks
       Docker offers a Content Trust mechanism that allows you to cryptographically sign images using a private key. This guarantees the image, and its tags, have not been modified.
 
-      - [Notary](https://github.com/notaryproject/notaryproject)
-      - [Cosign](https://github.com/sigstore/cosign)
-
+    - [Notary](https://github.com/notaryproject/notaryproject). Implementation of TUF specification.
+    - [sigstore/Cosign](https://github.com/sigstore/cosign)
+    - [Sigstore: A Solution to Software Supply Chain Security](https://itnext.io/sigstore-a-solution-to-software-supply-chain-security-35bc96bddad5)
+    - [Zero-Trust supply chains with Sigstore and SPIFFE/SPIRE](https://github.com/sigstore/community/blob/main/docs/zero-trust-supply-chains.pdf)
+      
+     
 - [x] Security profiles: SELinux, AppArmor, Seccomp.
 - Static code analysys tool for Dockerfile like a linter.
   - [Hadolint](https://github.com/hadolint/hadolint)
