@@ -87,6 +87,8 @@ Comparing the container scanners results:
 - [Azure best practices for build containers]()
 - [Docker best practices for build containers](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/)
 - [Google best practices for build containers](https://cloud.google.com/solutions/best-practices-for-building-containers)
+- [NIST](https://csrc.nist.gov/publications/detail/sp/800-190/final)
+
 ## Secure the Container Registry
 
 Best configurations with ECR, ACR, Harbor, etc. Best practices.
@@ -186,3 +188,4 @@ to run on a container can directly affect the host.
 ## Resources
 - [Docker Security Best Practices by Rani Osnat - AquaSecurity](https://blog.aquasec.com/docker-security-best-practices)
 - [Applying devsecops in a Golang app with trivy-github-actions by Daniel Pacak - AquaSecurity](https://blog.aquasec.com/devsecops-with-trivy-github-actions)
+
