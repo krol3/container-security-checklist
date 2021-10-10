@@ -1,5 +1,19 @@
 # Security Checklist for Build Container Images
 
+## [Container Threat Model](##container-threat-model):
+
+![thread-model](https://www.oreilly.com/library/view/container-security/9781492056690/assets/cose_0101.png)
+Figure by [Container Security by Liz Rice](https://www.oreilly.com/library/view/container-security/9781492056690/)
+
+- Insecure Host
+- Missconfiguration container
+- Vulnerable application
+- Supply chain attacks
+- Expose secrets
+- Insecure networking
+- Integrity and confidentiality of OS images
+- Container escape vulnerabilities
+
 Checklist to build and secure the images.
 * [Secure the Build](##secure-the-build)
 * [Secure the Container Registry](##secure-the-container-registry)
@@ -83,10 +97,12 @@ Vulnerability scanning as a automated step in your CI/CD pipeline
 Comparing the container scanners results:
 - [Container Vulnerability Scanning Fun by Rory](https://raesene.github.io/blog/2020/06/21/Container_Vulnerability_Scanning_Fun/)
 - [Comparison – Anchore Engine vs Clair vs Trivy by Alfredo Pardo](https://www.a10o.net/devsecops/docker-image-security-static-analysis-tool-comparison-anchore-engine-vs-clair-vs-trivy/)
+- 
 ### Build Resources
 - [Azure best practices for build containers]()
 - [Docker best practices for build containers](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/)
 - [Google best practices for build containers](https://cloud.google.com/solutions/best-practices-for-building-containers)
+- 
 ## Secure the Container Registry
 
 Best configurations with ECR, ACR, Harbor, etc. Best practices.
@@ -96,6 +112,7 @@ Best configurations with ECR, ACR, Harbor, etc. Best practices.
       It may unintentionally contain security vulnerabilities, or may have intentionally been replaced with an image compromised by attackers.
 
 - [x] Use a private registry deployed behind firewall, to reduce the risk of tampering.
+
 ### Registry Resources
 - [Azure ACR](https://docs.microsoft.com/en-us/azure/container-registry/security-controls-policy)
 - [Azure best practices for Azure Container Registry](https://docs.microsoft.com/en-us/azure/container-registry/container-registry-best-practices)
@@ -129,7 +146,14 @@ Best configurations with ECR, ACR, Harbor, etc. Best practices.
 
 - [CIS Docker Bench](https://github.com/docker/docker-bench-security).
 - [Content trust in Docker](https://docs.docker.com/engine/security/trust/)
+
 ## Secure the Infrastructure
+
+**Risk:**
+- If host is compromised, the container will be too.
+- Kernel exploits
+
+**Best practices:**
 - [x] Keep host Up to date to prevent a range of known vulnerabilities, many of which can result in container espaces. Since the kernel is shared by the container and the host, kernel exploits when an attacker manages
 to run on a container can directly affect the host.
 - [x] Use CIS-Benchmark for the operating system.
