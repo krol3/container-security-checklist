@@ -65,6 +65,13 @@ Figure by [cncf/tag-security](https://github.com/cncf/sig-security/)
   - Tagging using semantic versioning.
   - Not use mutable tags(latest,staging,etc). Use Inmutable tags(SHA-256, commit).
   - [The challengue of uniquely identifying your images](https://blog.aquasec.com/docker-image-tags)
+
+```
+Pulling images by digest
+docker images --digests
+docker pull alpine@sha256:b7233dafbed64e3738630b69382a8b231726aa1014ccaabc1947c5308a8910a7
+```
+
 - [x] Signing images.
 
       Sign and verify images to mitigate MITM attacks
@@ -102,7 +109,7 @@ Comparing the container scanners results:
 - [Azure best practices for build containers]()
 - [Docker best practices for build containers](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/)
 - [Google best practices for build containers](https://cloud.google.com/solutions/best-practices-for-building-containers)
-- 
+
 ## Secure the Container Registry
 
 Best configurations with ECR, ACR, Harbor, etc. Best practices.
@@ -125,7 +132,7 @@ Best configurations with ECR, ACR, Harbor, etc. Best practices.
 - [x] Restrict access to container runtime daemon/APIs
 - [x] Use if it's possible in Rootless Mode.
 
-### Docker
+### Docker Security
 
 - [x] Avoid misconfigured exposed Docker API Ports, attackers used the misconfigured port to deploy and run a malicious image that contained malware that was specifically designed to evade static scanning.
 - [x] Configure TLS authentication for Docker daemon and centralized and remote logging.
@@ -138,12 +145,14 @@ Best configurations with ECR, ACR, Harbor, etc. Best practices.
       • Do not run Docker images with an option like this which exposes the socket in the container.
              -v /var/run/docker.sock://var/run/docker.sock
 
-- [x] Run Docker in Rootless Mode
+- [x] Run Docker in Rootless Mode. `docker context use rootless`
 
-      docker context use rootless
-
-#### Tools
-
+- [x] Enable Docker Content Trust. Docker. `DOCKER_CONTENT_TRUST=1`
+      . Docker Content Trust implements [The Update Framework](https://theupdateframework.io/) (TUF)
+      . Powered by [Notary](https://github.com/notaryproject/notary), an open-source TUF-client and server that can operate over arbitrary trusted collections of data.
+      
+**More Material**
+- [Docker Security Labs](https://github.com/docker/labs/tree/master/security)
 - [CIS Docker Bench](https://github.com/docker/docker-bench-security).
 - [Content trust in Docker](https://docs.docker.com/engine/security/trust/)
 
@@ -183,7 +192,13 @@ to run on a container can directly affect the host.
 
       When a container is compromised, attackers may try to make use of the underlying host resources to perform malicious activity. 
       Set memory and CPU usage limits to minimize the impact of breaches for resource-intensive containers.
+      
+```
+docker run -d --name container-1 --cpuset-cpus 0 --cpu-shares 768 cpu-stress
+```
 
+- [x] Preventing a fork bomb. `docker run --rm -it --pids-limit 200 debian:jessie `
+ 
 - [x] Segregate container networks.
 
       The default bridge network exists on all Docker hosts—if you do not specify a different network, new containers automatically connect to it.
@@ -207,6 +222,9 @@ to run on a container can directly affect the host.
 - [x] Apply automated patching
 - [x] Confirms Inmutability. Implement drift prevention to ensure container inmutability.
 - [x] Ensure you have robust auditing and forensics for quick troubleshooting and compliance reporting.
-## Resources
+
+## Further reading:
+- [Linux Capabilities](https://www.kernel.org/doc/ols/2008/ols2008v1-pages-163-172.pdf):making them work, published in hernel.org 2008.
+- [Using seccomp to limit the kernel attack surface](https://man7.org/conf/lpc2015/limiting_kernel_attack_surface_with_seccomp-LPC_2015-Kerrisk.pdf)
 - [Docker Security Best Practices by Rani Osnat - AquaSecurity](https://blog.aquasec.com/docker-security-best-practices)
 - [Applying devsecops in a Golang app with trivy-github-actions by Daniel Pacak - AquaSecurity](https://blog.aquasec.com/devsecops-with-trivy-github-actions)
