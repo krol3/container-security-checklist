@@ -109,6 +109,7 @@ Comparing the container scanners results:
 - [Azure best practices for build containers]()
 - [Docker best practices for build containers](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/)
 - [Google best practices for build containers](https://cloud.google.com/solutions/best-practices-for-building-containers)
+- [NIST](https://csrc.nist.gov/publications/detail/sp/800-190/final)
 
 ## Secure the Container Registry
 
@@ -228,3 +229,4 @@ docker run -d --name container-1 --cpuset-cpus 0 --cpu-shares 768 cpu-stress
 - [Using seccomp to limit the kernel attack surface](https://man7.org/conf/lpc2015/limiting_kernel_attack_surface_with_seccomp-LPC_2015-Kerrisk.pdf)
 - [Docker Security Best Practices by Rani Osnat - AquaSecurity](https://blog.aquasec.com/docker-security-best-practices)
 - [Applying devsecops in a Golang app with trivy-github-actions by Daniel Pacak - AquaSecurity](https://blog.aquasec.com/devsecops-with-trivy-github-actions)
+
