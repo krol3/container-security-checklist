@@ -1,6 +1,22 @@
-# Security Checklist for Build Container Images
+# Container Security Checklist: From the image to the workload
 
-## [Container Threat Model](##container-threat-model):
+# Table Of Contents
+
+* [Container Threat Model](#container-threat-model)
+* [Container Security Checklist](#container-security-checklist)
+  * [Secure the Build](#secure-the-build)
+  * [Secure the Container Registry](#secure-the-container-registry)
+  * [Secure the Container Runtime](#secure-the-container-runtime)
+  * [Secure the Infrastructure](#secure-the-infrastructure)
+  * [Secure the Data](#secure-the-data)
+  * [Secure the Workloads](#secure-the-workloads)
+* [Container Security Guides](#container-security-guides)
+* [Further reading](#further-reading)
+* [Collaborate](#collaborate)
+
+
+---
+## Container Threat Model
 
 ![thread-model](https://www.oreilly.com/library/view/container-security/9781492056690/assets/cose_0101.png)
 Figure by [Container Security by Liz Rice](https://www.oreilly.com/library/view/container-security/9781492056690/)
@@ -14,13 +30,16 @@ Figure by [Container Security by Liz Rice](https://www.oreilly.com/library/view/
 - Integrity and confidentiality of OS images
 - Container escape vulnerabilities
 
+## Container Security Checklist
+
 Checklist to build and secure the images.
-* [Secure the Build](##secure-the-build)
-* [Secure the Container Registry](##secure-the-container-registry)
-* [Secure the Container Runtime](##secure-the-container-runtime)
-* [Secure the Infrastructure](##secure-the-infrastructure)
-* [Secure the Data](##secure-the-data)
-* [Secure the Workloads](##secure-the-workloads)
+
+* [Secure the Build](#secure-the-build)
+* [Secure the Container Registry](#secure-the-container-registry)
+* [Secure the Container Runtime](#secure-the-container-runtime)
+* [Secure the Infrastructure](#secure-the-infrastructure)
+* [Secure the Data](#secure-the-data)
+* [Secure the Workloads](#secure-the-workloads)
 
 ![Build](https://raw.githubusercontent.com/cncf/tag-security/main/security-whitepaper/cnswp-images/RackMultipart20201111_figure3.png)
 Figure by [cncf/tag-security](https://github.com/cncf/sig-security/)
@@ -104,12 +123,11 @@ Vulnerability scanning as a automated step in your CI/CD pipeline
 Comparing the container scanners results:
 - [Container Vulnerability Scanning Fun by Rory](https://raesene.github.io/blog/2020/06/21/Container_Vulnerability_Scanning_Fun/)
 - [Comparison – Anchore Engine vs Clair vs Trivy by Alfredo Pardo](https://www.a10o.net/devsecops/docker-image-security-static-analysis-tool-comparison-anchore-engine-vs-clair-vs-trivy/)
-- 
+
 ### Build Resources
 - [Azure best practices for build containers]()
 - [Docker best practices for build containers](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/)
 - [Google best practices for build containers](https://cloud.google.com/solutions/best-practices-for-building-containers)
-- [NIST](https://csrc.nist.gov/publications/detail/sp/800-190/final)
 
 ## Secure the Container Registry
 
@@ -151,7 +169,7 @@ Best configurations with ECR, ACR, Harbor, etc. Best practices.
 - [x] Enable Docker Content Trust. Docker. `DOCKER_CONTENT_TRUST=1`
       . Docker Content Trust implements [The Update Framework](https://theupdateframework.io/) (TUF)
       . Powered by [Notary](https://github.com/notaryproject/notary), an open-source TUF-client and server that can operate over arbitrary trusted collections of data.
-      
+
 **More Material**
 - [Docker Security Labs](https://github.com/docker/labs/tree/master/security)
 - [CIS Docker Bench](https://github.com/docker/docker-bench-security).
@@ -172,12 +190,37 @@ to run on a container can directly affect the host.
 - [x] Use Security-Enhanced Linux (SELinux) to further isolate containers.
 
 ## Secure the Data
-- [x] Don't leak sensitive info in the images such as credentials, tokens, SSH keys, TLS certificates, database names or connection strings.
+- [x] Don't leak sensitive info in the images, avoid using environment variables for your sensitive information.
+> Secrets are Digital credentials:
+> - passwords
+> - API keys & Tokens
+> - SSH keys
+> - Private certificates for secure communication, transmitting and receiving data (TLS, SSL, and so on)
+> - Private encryption keys for systems like PGP
+> - Database names or connection strings.
+> - Sensitive configuration settings (email address, usernames, debug flags, etc.)
+
 - [x] Use a proper filesystem encryption technology for container storage
 - [x] Provide write/execute access only to the containers that need to modify the data in a specific host filesystem path
 - [x] OPA to write controls like only allowing Read-only Root Filesystem access, listing allowed host filesystem paths to mount, and listing allowed Flex volume drivers.
 - [x] Automatically scan container images for sensitive data such as credentials, tokens, SSH keys, TLS certificates, database names or connection strings and so on, before pushing them to a container registry (can be done locally and in CI).
 - [x] Limit storage related syscalls and capabilities to prevent runtime privilege escalation.
+
+- [x] Implement RBAC, or role-based access control. Every human or application only needs the minimum secrets required to operate, nothing more. **Principle of Least Privilege**.
+- [x] Run audits regularly. Centralized audit trails are the key to knowing all the key security events.
+- [x] Rotate secrets, a standard security practice.
+- [x] Automatically create and store secrets
+
+### Secrets Management Tools
+
+* Cloud Provider Key Management:
+- [AWS Secrets Manager](https://aws.amazon.com/secrets-manager/)
+- [Azure Key Vault](https://docs.microsoft.com/en-us/azure/key-vault/general/basic-concepts)
+- [Google Secret Manager](https://cloud.google.com/secret-manager)
+
+* Enterprise secrets vault:
+- [HashiCorp Vault](https://www.vaultproject.io/)
+- [CyberArk Conjur](https://www.cyberark.com/products/secrets-manager-enterprise/)
 
 ## Secure the Workloads... Running the containers
 - [x] Avoid privileged containers
@@ -224,9 +267,17 @@ docker run -d --name container-1 --cpuset-cpus 0 --cpu-shares 768 cpu-stress
 - [x] Confirms Inmutability. Implement drift prevention to ensure container inmutability.
 - [x] Ensure you have robust auditing and forensics for quick troubleshooting and compliance reporting.
 
+## Container Security Guides
+
+* [SP 800-190 - Application Container Security Guide by NIST](https://csrc.nist.gov/publications/detail/sp/800-190/final)
 ## Further reading:
 - [Linux Capabilities](https://www.kernel.org/doc/ols/2008/ols2008v1-pages-163-172.pdf):making them work, published in hernel.org 2008.
 - [Using seccomp to limit the kernel attack surface](https://man7.org/conf/lpc2015/limiting_kernel_attack_surface_with_seccomp-LPC_2015-Kerrisk.pdf)
 - [Docker Security Best Practices by Rani Osnat - AquaSecurity](https://blog.aquasec.com/docker-security-best-practices)
 - [Applying devsecops in a Golang app with trivy-github-actions by Daniel Pacak - AquaSecurity](https://blog.aquasec.com/devsecops-with-trivy-github-actions)
 
+## Collaborate
+
+If you find any typos, errors, outdated resources; or if you have a different point of view. Please open a pull request or contact me.
+
+Pull requests and stars are always welcome 🙌
