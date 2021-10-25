@@ -5,8 +5,11 @@
 * [Container Threat Model](#container-threat-model)
 * [Container Security Checklist](#container-security-checklist)
   * [Secure the Build](#secure-the-build)
+    * [Image Scanning](#image-scanning)
+    * [Image Signing](#image-signing)
   * [Secure the Container Registry](#secure-the-container-registry)
   * [Secure the Container Runtime](#secure-the-container-runtime)
+    * [Docker Security](#docker-security)
   * [Secure the Infrastructure](#secure-the-infrastructure)
   * [Secure the Data](#secure-the-data)
   * [Secure the Workloads](#secure-the-workloads)
@@ -67,11 +70,10 @@ Figure by [cncf/tag-security](https://github.com/cncf/sig-security/)
 - [x] Use official base images.
   - Avoid unknown public images.
 - [x] Rootless. Run as a non-root user. Least privileged user
-  
 - [x] Create a dedicated user and group on the image.
 
-      Do not use a UID below 10,000. For best security, always run your processes as a UID above 10,000.
-      Remove setuid and setgid permissions from the images
+> Do not use a UID below 10,000. For best security, always run your processes as a UID above 10,000.
+> Remove setuid and setgid permissions from the images
 
 - [x] Avoid privileged containers, which lets a container run as root on the local machine.
 - [x] Use only the necessary Privileged Capabilities.
@@ -91,41 +93,40 @@ docker images --digests
 docker pull alpine@sha256:b7233dafbed64e3738630b69382a8b231726aa1014ccaabc1947c5308a8910a7
 ```
 
-- [x] Signing images.
-
-      Sign and verify images to mitigate MITM attacks
-      Docker offers a Content Trust mechanism that allows you to cryptographically sign images using a private key. This guarantees the image, and its tags, have not been modified.
-
-    - [Notary](https://github.com/notaryproject/notaryproject). Implementation of TUF specification.
-    - [sigstore/Cosign](https://github.com/sigstore/cosign)
-    - [Sigstore: A Solution to Software Supply Chain Security](https://itnext.io/sigstore-a-solution-to-software-supply-chain-security-35bc96bddad5)
-    - [Zero-Trust supply chains with Sigstore and SPIFFE/SPIRE](https://github.com/sigstore/community/blob/main/docs/zero-trust-supply-chains.pdf)
-      
-     
-- [x] Security profiles: SELinux, AppArmor, Seccomp.
+- [x] Enanbled Security profiles: SELinux, AppArmor, Seccomp.
 - Static code analysys tool for Dockerfile like a linter.
   - [Hadolint](https://github.com/hadolint/hadolint)
   - Packers (including encrypters), and downloaders are all able to evade static scanning by, for example, encrypting binary code that is only executed in memory, making the malware active only in runtime.
 
-### Check image for Common Vulnerabilities and Exposures (CVE)
+### Image Scanning
+
+- [x] Check image for Common Vulnerabilities and Exposures (CVE)
 - [x] Prevent attacks using the Supply Chain Attack
 - [x] Scan container images for CVE (Common Vulnerabilities and Exposures).
-  - [Trivy](https://github.com/aquasecurity/trivy)
 - [x] Used dynamic analysis techniques for containers.
 
-### Integrates shift-left security
-Vulnerability scanning as a automated step in your CI/CD pipeline
+**Container Security Scanners**
 
-- [Trivy](https://github.com/aquasecurity/trivy)
-- Clair
-- Anchore
+- [Trivy by AquaSecurity](https://github.com/aquasecurity/trivy)
+- [Clair by Quay](https://github.com/quay/clair)
+- [Anchore](https://anchore.com/opensource/)
+- [Dagda](https://github.com/eliasgranderubio/dagda/)
 
 Comparing the container scanners results:
 - [Container Vulnerability Scanning Fun by Rory](https://raesene.github.io/blog/2020/06/21/Container_Vulnerability_Scanning_Fun/)
 - [Comparison – Anchore Engine vs Clair vs Trivy by Alfredo Pardo](https://www.a10o.net/devsecops/docker-image-security-static-analysis-tool-comparison-anchore-engine-vs-clair-vs-trivy/)
 
-### Build Resources
-- [Azure best practices for build containers]()
+### Image Signing
+
+Sign and verify images to mitigate MITM attacks. Docker offers a Content Trust mechanism that allows you to cryptographically sign images using a private key. This guarantees the image, and its tags, have not been modified.
+
+- [Notary](https://github.com/notaryproject/notaryproject). Implementation of TUF specification.
+- [sigstore/Cosign](https://github.com/sigstore/cosign)
+- [Sigstore: A Solution to Software Supply Chain Security](https://itnext.io/sigstore-a-solution-to-software-supply-chain-security-35bc96bddad5)
+- [Zero-Trust supply chains with Sigstore and SPIFFE/SPIRE](https://github.com/sigstore/community/blob/main/docs/zero-trust-supply-chains.pdf)
+
+**More Material about build containers**
+- [Azure best practices for build containers](https://docs.microsoft.com/en-us/azure/container-registry/container-registry-best-practices)
 - [Docker best practices for build containers](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/)
 - [Google best practices for build containers](https://cloud.google.com/solutions/best-practices-for-building-containers)
 
@@ -154,23 +155,24 @@ Best configurations with ECR, ACR, Harbor, etc. Best practices.
 ### Docker Security
 
 - [x] Avoid misconfigured exposed Docker API Ports, attackers used the misconfigured port to deploy and run a malicious image that contained malware that was specifically designed to evade static scanning.
-- [x] Configure TLS authentication for Docker daemon and centralized and remote logging.
-- [x] Do not expose the Docker Daemon socket.
+- [x] TLS encryption between the Docker client and daemon. Do not expose the Docker engine using Unix socket or remotely using http.
+
+      Never make the daemon socket available for remote connections, unless you are using Docker’s encrypted HTTPS socket, which supports authentication.
+
+- [x] Limit the usage of mount Docker socket in a container in an untrusted environment.
+
+  > Do not run Docker images with an option that exposes the socket in the container.
+             -v /var/run/docker.sock://var/run/docker.sock
 
       The Docker daemon socket is a Unix network socket that facilitates communication with the Docker API. By default, this socket is owned by the root user. If anyone else obtains access to the socket, they will have permissions equivalent to root access to the host.
 
-      To avoid this issue, follow these best practices:
-      • Never make the daemon socket available for remote connections, unless you are using Docker’s encrypted HTTPS socket, which supports authentication.
-      • Do not run Docker images with an option like this which exposes the socket in the container.
-             -v /var/run/docker.sock://var/run/docker.sock
-
-- [x] Run Docker in Rootless Mode. `docker context use rootless`
-
+- [x] Run Docker in [Rootless Mode](https://docs.docker.com/engine/security/rootless/). `docker context use rootless`
+- [x] Enable the [user namespaces](https://docs.docker.com/engine/security/userns-remap/).
 - [x] Enable Docker Content Trust. Docker. `DOCKER_CONTENT_TRUST=1`
       . Docker Content Trust implements [The Update Framework](https://theupdateframework.io/) (TUF)
       . Powered by [Notary](https://github.com/notaryproject/notary), an open-source TUF-client and server that can operate over arbitrary trusted collections of data.
 
-**More Material**
+**More Material about Docker Security**
 - [Docker Security Labs](https://github.com/docker/labs/tree/master/security)
 - [CIS Docker Bench](https://github.com/docker/docker-bench-security).
 - [Content trust in Docker](https://docs.docker.com/engine/security/trust/)
@@ -182,7 +184,7 @@ Best configurations with ECR, ACR, Harbor, etc. Best practices.
 - Kernel exploits
 
 **Best practices:**
-- [x] Keep host Up to date to prevent a range of known vulnerabilities, many of which can result in container espaces. Since the kernel is shared by the container and the host, kernel exploits when an attacker manages
+- [x] Keep the host kernel patched to prevent a range of known vulnerabilities, many of which can result in container espaces. Since the kernel is shared by the container and the host, kernel exploits when an attacker manages
 to run on a container can directly affect the host.
 - [x] Use CIS-Benchmark for the operating system.
 
@@ -190,6 +192,7 @@ to run on a container can directly affect the host.
 - [x] Use Security-Enhanced Linux (SELinux) to further isolate containers.
 
 ## Secure the Data
+
 - [x] Don't leak sensitive info in the images, avoid using environment variables for your sensitive information.
 > Secrets are Digital credentials:
 > - passwords
@@ -201,6 +204,7 @@ to run on a container can directly affect the host.
 > - Sensitive configuration settings (email address, usernames, debug flags, etc.)
 
 - [x] Use a proper filesystem encryption technology for container storage
+- [x] Use volume mounts to pass secrets to a container at runtime
 - [x] Provide write/execute access only to the containers that need to modify the data in a specific host filesystem path
 - [x] OPA to write controls like only allowing Read-only Root Filesystem access, listing allowed host filesystem paths to mount, and listing allowed Flex volume drivers.
 - [x] Automatically scan container images for sensitive data such as credentials, tokens, SSH keys, TLS certificates, database names or connection strings and so on, before pushing them to a container registry (can be done locally and in CI).
@@ -213,12 +217,16 @@ to run on a container can directly affect the host.
 
 ### Secrets Management Tools
 
-* Cloud Provider Key Management:
+Open source tools:
+- [detect-secrets by Yeld](https://github.com/Yelp/detect-secrets): detecting and preventing secrets in code.
+- [git-secrets by awslabs](https://github.com/awslabs/git-secrets#nix-linux-macos): Prevents you from committing secrets and credentials into git repositories
+
+Cloud Provider Key Management
 - [AWS Secrets Manager](https://aws.amazon.com/secrets-manager/)
 - [Azure Key Vault](https://docs.microsoft.com/en-us/azure/key-vault/general/basic-concepts)
 - [Google Secret Manager](https://cloud.google.com/secret-manager)
 
-* Enterprise secrets vault:
+Enterprise secrets vault:
 - [HashiCorp Vault](https://www.vaultproject.io/)
 - [CyberArk Conjur](https://www.cyberark.com/products/secrets-manager-enterprise/)
 
