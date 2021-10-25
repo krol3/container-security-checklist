@@ -45,8 +45,10 @@ Checklist to build and secure the images.
 * [Secure the Workloads](#secure-the-workloads)
 
 ![Build](https://raw.githubusercontent.com/cncf/tag-security/main/security-whitepaper/cnswp-images/RackMultipart20201111_figure3.png)
+
 Figure by [cncf/tag-security](https://github.com/cncf/sig-security/)
 
+---
 ## Secure the Build
 
 ### Hardening Code - Secure SDLC (Software Development Life Cycle )
@@ -56,8 +58,8 @@ Figure by [cncf/tag-security](https://github.com/cncf/sig-security/)
 ### Secure the Image - Hardening
 - *Reduce the attack suface*
 
->      Package a single app per container. Small container images.
->      Minimize the number of layers.
+>    Package a single app per container. Small container images.
+>    Minimize the number of layers.
 
 - Use the minimal base image: alpine, scratch, [distroless](https://github.com/GoogleContainerTools/distroless) images.
 - Multi-staged builds.
@@ -135,8 +137,8 @@ Sign and verify images to mitigate MITM attacks. Docker offers a Content Trust m
 Best configurations with ECR, ACR, Harbor, etc. Best practices.
 - [x] Lock down access to the image registry (who can push/pull) to restrict which users can upload and download images from it. Uses Role Based Access Control (RBAC)
 
->      There is no guarantee that the image you are pulling from the registry is trusted.
->      It may unintentionally contain security vulnerabilities, or may have intentionally been replaced with an image compromised by attackers.
+>    There is no guarantee that the image you are pulling from the registry is trusted.
+>    It may unintentionally contain security vulnerabilities, or may have intentionally been replaced with an image compromised by attackers.
 
 - [x] Use a private registry deployed behind firewall, to reduce the risk of tampering.
 
@@ -157,7 +159,7 @@ Best configurations with ECR, ACR, Harbor, etc. Best practices.
 - [x] Avoid misconfigured exposed Docker API Ports, attackers used the misconfigured port to deploy and run a malicious image that contained malware that was specifically designed to evade static scanning.
 - [x] TLS encryption between the Docker client and daemon. Do not expose the Docker engine using Unix socket or remotely using http.
 
->      Never make the daemon socket available for remote connections, unless you are using Docker’s encrypted HTTPS socket, which supports authentication.
+>    Never make the daemon socket available for remote connections, unless you are using Docker’s encrypted HTTPS socket, which supports authentication.
 
 - [x] Limit the usage of mount Docker socket in a container in an untrusted environment.
 
@@ -165,7 +167,7 @@ Best configurations with ECR, ACR, Harbor, etc. Best practices.
 
       -v /var/run/docker.sock://var/run/docker.sock
 
->      The Docker daemon socket is a Unix network socket that facilitates communication with the Docker API. By default, this socket is owned by the root user. If anyone else obtains access to the socket, they will have permissions equivalent to root access to the host.
+>    The Docker daemon socket is a Unix network socket that facilitates communication with the Docker API. By default, this socket is owned by the root user. If anyone else obtains access to the socket, they will have permissions equivalent to root access to the host.
 
 - [x] Run Docker in [Rootless Mode](https://docs.docker.com/engine/security/rootless/). `docker context use rootless`
 - [x] Enable the [user namespaces](https://docs.docker.com/engine/security/userns-remap/).
@@ -238,13 +240,13 @@ Enterprise secrets vault:
     • Ability to tamper with Linux security modules like AppArmor and SELinux
     • Ability to install a new instance of the Docker platform, using the host’s kernel capabilities, and run Docker within Docker.
 
->      To check if the container is running in privileged mode:
->          docker inspect --format =’{{. HostConfig.Privileged}}’[container_id]
+>    To check if the container is running in privileged mode
+>        `docker inspect --format =’{{. HostConfig.Privileged}}’[container_id]`
 
 - [x] Limit container resources.
 
->      When a container is compromised, attackers may try to make use of the underlying host resources to perform malicious activity.
->      Set memory and CPU usage limits to minimize the impact of breaches for resource-intensive containers.
+>    When a container is compromised, attackers may try to make use of the underlying host resources to perform malicious activity.
+>    Set memory and CPU usage limits to minimize the impact of breaches for resource-intensive containers.
 
 ```
 docker run -d --name container-1 --cpuset-cpus 0 --cpu-shares 768 cpu-stress
@@ -261,13 +263,13 @@ docker run -d --name container-1 --cpuset-cpus 0 --cpu-shares 768 cpu-stress
 
 - [x] Improve container isolation.
 
->      Protecting a container is exactly the same as protecting any process running on Linux.
-      Ideally, the operating system on a container host should protect the host kernel from container escapes, and prevent mutual influence between containers.
+>   Protecting a container is exactly the same as protecting any process running on Linux.
+>   Ideally, the operating system on a container host should protect the host kernel from container escapes, and prevent mutual influence between containers.
 
 - [x] Set filesystem and volumes to Read only. 
 
->      This can prevent malicious activity such as deploying malware on the container or modifying configuration.
-            docker run --read-only alpine
+>    This can prevent malicious activity such as deploying malware on the container or modifying configuration.
+>         `docker run --read-only alpine`
 
 - [x] Complete lifecycle management restrict system calls from Within Containers
 - [x] Monitor Container Activity. Analyze collected events to detect suspicious behaviourial patterns.
@@ -280,7 +282,7 @@ docker run -d --name container-1 --cpuset-cpus 0 --cpu-shares 768 cpu-stress
 
 * [SP 800-190 - Application Container Security Guide by NIST](https://csrc.nist.gov/publications/detail/sp/800-190/final)
 ## Further reading:
-- [Linux Capabilities](https://www.kernel.org/doc/ols/2008/ols2008v1-pages-163-172.pdf):making them work, published in hernel.org 2008.
+- [Linux Capabilities](https://www.kernel.org/doc/ols/2008/ols2008v1-pages-163-172.pdf): making them work, published in hernel.org 2008.
 - [Using seccomp to limit the kernel attack surface](https://man7.org/conf/lpc2015/limiting_kernel_attack_surface_with_seccomp-LPC_2015-Kerrisk.pdf)
 - [Docker Security Best Practices by Rani Osnat - AquaSecurity](https://blog.aquasec.com/docker-security-best-practices)
 - [Applying devsecops in a Golang app with trivy-github-actions by Daniel Pacak - AquaSecurity](https://blog.aquasec.com/devsecops-with-trivy-github-actions)
