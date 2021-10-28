@@ -21,7 +21,7 @@
 ---
 ## Container Threat Model
 
-![thread-model](https://www.oreilly.com/library/view/container-security/9781492056690/assets/cose_0101.png)
+[![thread-model](https://www.oreilly.com/library/view/container-security/9781492056690/assets/cose_0101.png)](https://medium.com/oreillymedia/container-security-threats-38649261fb4f)
 Figure by [Container Security by Liz Rice](https://www.oreilly.com/library/view/container-security/9781492056690/)
 
 - Insecure Host
