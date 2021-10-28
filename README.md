@@ -35,7 +35,7 @@ Figure by [Container Security by Liz Rice](https://www.oreilly.com/library/view/
 
 ## Container Security Checklist
 
-Checklist to build and secure the images.
+Checklist to build and secure the images across the following phases:
 
 * [Secure the Build](#secure-the-build)
 * [Secure the Container Registry](#secure-the-container-registry)
