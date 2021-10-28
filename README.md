@@ -25,7 +25,7 @@
 Figure by [Container Security by Liz Rice](https://www.oreilly.com/library/view/container-security/9781492056690/)
 
 - Insecure Host
-- Missconfiguration container
+- Misconfiguration container
 - Vulnerable application
 - Supply chain attacks
 - Expose secrets
@@ -56,7 +56,7 @@ Figure by [cncf/tag-security](https://github.com/cncf/sig-security/)
   - [Source code analysis tools](https://owasp.org/www-community/Free_for_Open_Source_Application_Security_Tools): SAST, IAST.
 
 ### Secure the Image - Hardening
-- *Reduce the attack suface*
+- *Reduce the attack surface*
 
 >    Package a single app per container. Small container images.
 >    Minimize the number of layers.
@@ -187,7 +187,7 @@ Best configurations with ECR, ACR, Harbor, etc. Best practices.
 - Kernel exploits
 
 **Best practices:**
-- [x] Keep the host kernel patched to prevent a range of known vulnerabilities, many of which can result in container espaces. Since the kernel is shared by the container and the host, kernel exploits when an attacker manages
+- [x] Keep the host kernel patched to prevent a range of known vulnerabilities, many of which can result in container escape. Since the kernel is shared by the container and the host, the kernel exploits when an attacker manages
 to run on a container can directly affect the host.
 - [x] Use CIS-Benchmark for the operating system.
 
@@ -221,7 +221,7 @@ to run on a container can directly affect the host.
 ### Secrets Management Tools
 
 Open source tools:
-- [detect-secrets by Yeld](https://github.com/Yelp/detect-secrets): detecting and preventing secrets in code.
+- [detect-secrets by Yelp](https://github.com/Yelp/detect-secrets): detecting and preventing secrets in code.
 - [git-secrets by awslabs](https://github.com/awslabs/git-secrets#nix-linux-macos): Prevents you from committing secrets and credentials into git repositories
 
 Cloud Provider Key Management
