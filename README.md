@@ -150,6 +150,9 @@ Best configurations with ECR, ACR, Harbor, etc. Best practices.
 - [Harbor](https://goharbor.io/)
 
 ## Secure the Container Runtime
+
+Enable detection of anomalous behaviour in applications.
+
 - [x] Applied the secure configurations in the container runtime. By default is insecure.
 - [x] Restrict access to container runtime daemon/APIs
 - [x] Use if it's possible in Rootless Mode.
