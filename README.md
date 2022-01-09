@@ -51,9 +51,11 @@ Figure by [cncf/tag-security](https://github.com/cncf/sig-security/)
 ---
 ## Secure the Build
 
-### Hardening Code - Secure SDLC (Software Development Life Cycle )
+### Secure Supply Chain
+- Know where images, packages came from.
+### Hardening Code - Secure SDLC (Software Development Life Cycle)
 - [x] Do a static analysis of the code and libraries used by the code to surface any vulnerabilities in the code and its dependencies. 
-  - [Source code analysis tools](https://owasp.org/www-community/Free_for_Open_Source_Application_Security_Tools): SAST, IAST.
+  -  Improve the security and quality of their code. [OWASP Open Source Application Security tools](https://owasp.org/www-community/Free_for_Open_Source_Application_Security_Tools): SAST, IAST.
 
 ### Secure the Image - Hardening
 - *Reduce the attack surface*
@@ -66,8 +68,6 @@ Figure by [cncf/tag-security](https://github.com/cncf/sig-security/)
 
 >   A well-designed multi-stage build contains only the minimal binary files and dependencies required for the final image, with no build tools or intermediate files.
 >   Optimize cache.
-
-- Detect misconfigurations.
 
 - [x] Use official base images.
   - Avoid unknown public images.
@@ -96,9 +96,11 @@ docker pull alpine@sha256:b7233dafbed64e3738630b69382a8b231726aa1014ccaabc1947c5
 ```
 
 - [x] Enanbled Security profiles: SELinux, AppArmor, Seccomp.
-- Static code analysys tool for Dockerfile like a linter.
+
+- [x] Static code analysys tool for Dockerfile like a linter. **Detect misconfigurations**
   - [Hadolint](https://github.com/hadolint/hadolint)
   - Packers (including encrypters), and downloaders are all able to evade static scanning by, for example, encrypting binary code that is only executed in memory, making the malware active only in runtime.
+  - Trivy detect missconfigurations 
 
 ### Image Scanning
 
@@ -150,6 +152,9 @@ Best configurations with ECR, ACR, Harbor, etc. Best practices.
 - [Harbor](https://goharbor.io/)
 
 ## Secure the Container Runtime
+
+Enable detection of anomalous behaviour in applications.
+
 - [x] Applied the secure configurations in the container runtime. By default is insecure.
 - [x] Restrict access to container runtime daemon/APIs
 - [x] Use if it's possible in Rootless Mode.
