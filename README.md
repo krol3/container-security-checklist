@@ -153,6 +153,19 @@ Best configurations with ECR, ACR, Harbor, etc. Best practices.
 
 ## Secure the Container Runtime
 
+### Why is important Runtime Security?
+- Detection of IOC (Indicator Of Compromise)
+- Detect Zero Days attack
+- Compliance requirement
+- Recommended in highly dynamic environments
+
+### Constraints
+- Event context
+- Safety
+- Low overhead
+- Wide support of kernels
+
+
 Enable detection of anomalous behaviour in applications.
 
 - [x] Applied the secure configurations in the container runtime. By default is insecure.
