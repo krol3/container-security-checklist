@@ -2,6 +2,7 @@
 
 # Table Of Contents
 
+* [Cloud Native Characteristics](#cloud-native-concepts)
 * [Container Threat Model](#container-threat-model)
 * [Container Security Checklist](#container-security-checklist)
   * [Secure the Build](#secure-the-build)
@@ -19,6 +20,20 @@
 
 
 ---
+
+## Cloud Native Concepts
+
+| Legacy apps   |      Cloud Native apps      |  Cloud Native Security |
+|----------|:-------------:|------:|
+| Infrequent releases |  frequently releases, using CI/CD | Shifting left with automated testing |
+| Persistent workloads |    Ephemeral workloads   |  Runtime controls that follow the workload |
+| Fixed address | Orchestrated containers. Kubernetes creates DNS records for services and pods |   Identity-based segmentation |
+| Hypervisor or hardware isolation | Shared kernel, obscured OS | Enforce least privilege on each workload |
+| Very little open source | Open source everywhere | SCA - Software composition analysis |
+| Propietary software | Proprietary code, Open source, Third-party software |  Software supply chain risk |
+| Vertical control of the stack | multi-cloud | Detecting cloud services missconfigurations |
+
+> Table by Aqua Cloud Native Security Platform, more details [download here](https://f.hubspotusercontent40.net/hubfs/1665891/Buyers_Guide/Aqua_Buyers_Guide_Cloud_Native_Security_Platform.pdf)
 ## Container Threat Model
 
 [![thread-model](https://www.oreilly.com/library/view/container-security/9781492056690/assets/cose_0101.png)](https://medium.com/oreillymedia/container-security-threats-38649261fb4f)
