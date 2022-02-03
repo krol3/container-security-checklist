@@ -2,21 +2,28 @@
 
 # Table Of Contents
 
-* [Cloud Native Characteristics](#cloud-native-concepts)
-* [Container Threat Model](#container-threat-model)
-* [Container Security Checklist](#container-security-checklist)
-  * [Secure the Build](#secure-the-build)
-    * [Image Scanning](#image-scanning)
-    * [Image Signing](#image-signing)
-  * [Secure the Container Registry](#secure-the-container-registry)
-  * [Secure the Container Runtime](#secure-the-container-runtime)
-    * [Docker Security](#docker-security)
-  * [Secure the Infrastructure](#secure-the-infrastructure)
-  * [Secure the Data](#secure-the-data)
-  * [Secure the Workloads](#secure-the-workloads)
-* [Container Security Guides](#container-security-guides)
-* [Further reading](#further-reading)
-* [Collaborate](#collaborate) 🙌
+  - [Cloud Native Concepts](#cloud-native-concepts)
+  - [Container Threat Model](#container-threat-model)
+  - [Container Security Checklist](#container-security-checklist)
+  - [Secure the Build](#secure-the-build)
+    - [Secure Supply Chain](#secure-supply-chain)
+    - [Hardening Code - Secure SDLC (Software Development Life Cycle)](#hardening-code---secure-sdlc-software-development-life-cycle)
+    - [Secure the Image - Hardening](#secure-the-image---hardening)
+    - [Image Scanning](#image-scanning)
+    - [Image Signing](#image-signing)
+  - [Secure the Container Registry](#secure-the-container-registry)
+    - [Registry Resources](#registry-resources)
+  - [Secure the Container Runtime](#secure-the-container-runtime)
+    - [Why is important Runtime Security?](#why-is-important-runtime-security)
+    - [Constraints](#constraints)
+    - [Docker Security](#docker-security)
+  - [Secure the Infrastructure](#secure-the-infrastructure)
+  - [Secure the Data](#secure-the-data)
+    - [Secrets Management Tools](#secrets-management-tools)
+  - [Secure the Workloads... Running the containers](#secure-the-workloads-running-the-containers)
+  - [Container Security Guides](#container-security-guides)
+  - [Further reading:](#further-reading)
+  - [Collaborate](#collaborate)
 
 
 ---
@@ -26,7 +33,7 @@
 | Legacy apps   |      Cloud Native apps      |  Cloud Native Security |
 |----------|:-------------:|------:|
 | Infrequent releases |  frequently releases, using CI/CD | Shifting left with automated testing |
-| Persistent workloads |    Ephemeral workloads   |  Runtime controls that follow the workload |
+| Persistent workloads |  Ephemeral workloads. Ensure that your containers are stateless and immutable |  Runtime controls that follow the workload |
 | Fixed address | Orchestrated containers. Kubernetes creates DNS records for services and pods |   Identity-based segmentation |
 | Hypervisor or hardware isolation | Shared kernel, obscured OS | Enforce least privilege on each workload |
 | Very little open source | Open source everywhere | SCA - Software composition analysis |
@@ -75,10 +82,14 @@ Figure by [cncf/tag-security](https://github.com/cncf/sig-security/)
 ### Secure the Image - Hardening
 - *Reduce the attack surface*
 
->    Package a single app per container. Small container images.
+>    Package a single application per container. Small container images.
 >    Minimize the number of layers.
 
-- Use the minimal base image: alpine, scratch, [distroless](https://github.com/GoogleContainerTools/distroless) images.
+- [x] Use the minimal base image: alpine, scratch, [distroless](https://github.com/GoogleContainerTools/distroless) images.
+
+> - [Do you use Alpine, distroless or vanilla images? ...](https://learnk8s.io/blog/smaller-docker-images)
+> - [7 Google best practices for building containers](https://cloud.google.com/blog/products/containers-kubernetes/7-best-practices-for-building-containers)
+
 - Multi-staged builds.
 
 >   A well-designed multi-stage build contains only the minimal binary files and dependencies required for the final image, with no build tools or intermediate files.
