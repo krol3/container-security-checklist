@@ -64,7 +64,7 @@ Checklist to build and secure the images across the following phases:
 * [Secure the Container Runtime](#secure-the-container-runtime)
 * [Secure the Infrastructure](#secure-the-infrastructure)
 * [Secure the Data](#secure-the-data)
-* [Secure the Workloads](#secure-the-workloads)
+* [Secure the Workloads](#secure-the-workloads-running-the-containers)
 
 ![Build](https://raw.githubusercontent.com/cncf/tag-security/main/security-whitepaper/cnswp-images/RackMultipart20201111_figure3.png)
 
