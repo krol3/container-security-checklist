@@ -131,6 +131,7 @@ docker pull alpine@sha256:b7233dafbed64e3738630b69382a8b231726aa1014ccaabc1947c5
 ### Image Scanning
 
 - [x] Check image for Common Vulnerabilities and Exposures (CVE)
+- [x] Check image for secrets
 - [x] Prevent attacks using the Supply Chain Attack
 - [x] Scan container images for CVE (Common Vulnerabilities and Exposures).
 - [x] Used dynamic analysis techniques for containers.
@@ -141,6 +142,7 @@ docker pull alpine@sha256:b7233dafbed64e3738630b69382a8b231726aa1014ccaabc1947c5
 - [Clair by Quay](https://github.com/quay/clair)
 - [Anchore](https://anchore.com/opensource/)
 - [Dagda](https://github.com/eliasgranderubio/dagda/)
+- [GitGuardian Shield](https://github.com/GitGuardian/ggshield/)
 
 Comparing the container scanners results:
 - [Container Vulnerability Scanning Fun by Rory](https://raesene.github.io/blog/2020/06/21/Container_Vulnerability_Scanning_Fun/)
