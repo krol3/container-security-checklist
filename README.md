@@ -89,7 +89,12 @@ Figure by [cncf/tag-security](https://github.com/cncf/sig-security/)
   - [Alpine images](https://hub.docker.com/_/alpine)
   - [Scratch images](https://hub.docker.com/_/scratch)
   - [Distroless images](https://github.com/GoogleContainerTools/distroless)
+- Use OS optimized for running containers:
   - [Flatcar images](https://www.flatcar.org/docs/latest/installing/)
+  - [CodeOS by Fedora](https://getfedora.org/coreos/) replaced the Project Atomic.
+  - [Bottlerocket by Aws](https://aws.amazon.com/bottlerocket/)
+  - [k3os by Rancher](https://github.com/rancher/k3os)
+  - [Container-Optimized OS - COS by Google](https://cloud.google.com/container-optimized-os/docs/concepts/features-and-benefits), based on [Chromium-os](https://www.chromium.org/chromium-os/) used by Google
 
 > - [Do you use Alpine, distroless or vanilla images? ...](https://learnk8s.io/blog/smaller-docker-images)
 > - [7 Google best practices for building containers](https://cloud.google.com/blog/products/containers-kubernetes/7-best-practices-for-building-containers)
