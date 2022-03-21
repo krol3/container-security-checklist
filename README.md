@@ -85,7 +85,11 @@ Figure by [cncf/tag-security](https://github.com/cncf/sig-security/)
 >    Package a single application per container. Small container images.
 >    Minimize the number of layers.
 
-- [x] Use the minimal base image: alpine, scratch, [distroless](https://github.com/GoogleContainerTools/distroless) images.
+- Use the minimal OS image:
+  - [Alpine images](https://hub.docker.com/_/alpine)
+  - [Scratch images](https://hub.docker.com/_/scratch)
+  - [Distroless images](https://github.com/GoogleContainerTools/distroless)
+  - [Flatcar images](https://www.flatcar.org/docs/latest/installing/)
 
 > - [Do you use Alpine, distroless or vanilla images? ...](https://learnk8s.io/blog/smaller-docker-images)
 > - [7 Google best practices for building containers](https://cloud.google.com/blog/products/containers-kubernetes/7-best-practices-for-building-containers)
