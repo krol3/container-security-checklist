@@ -80,6 +80,9 @@ Figure by [cncf/tag-security](https://github.com/cncf/sig-security/)
   -  Improve the security and quality of their code. [OWASP Open Source Application Security tools](https://owasp.org/www-community/Free_for_Open_Source_Application_Security_Tools): SAST, IAST.
 
 ### Secure the Image - Hardening
+
+You can build the container images using [Docker](https://docs.docker.com/engine/reference/commandline/build/), [Kaniko](https://github.com/GoogleContainerTools/kaniko).
+
 - *Reduce the attack surface*
 
 >    Package a single application per container. Small container images.
@@ -190,6 +193,21 @@ Best configurations with ECR, ACR, Harbor, etc. Best practices.
 
 ## Secure the Container Runtime
 
+See the following container runtimes, there are three main types of container runtimes—low-level runtimes, high-level runtimes, and  virtualized runtimes or sandboxed.
+
+1. Low-Level Container Runtimes:
+- [runC](https://github.com/opencontainers/runc)
+- [crun](https://github.com/containers/crun)
+- [containerd](https://containerd.io/)
+2. High-Level Container Runtimes
+- [Docker Engine](https://docs.docker.com)
+- [Podman](https://podman.io/)
+- [CRI-O](https://github.com/cri-o/cri-o) - OCI-based implementation of Kubernetes Container Runtime Interface
+- [Mirantes Container Runtime](https://docs.mirantis.com/mcr/20.10/overview.html)
+3. Sandboxed and Virtualized Container Runtimes
+- [gVisor](https://gvisor.dev/)
+- [nabla-containers](https://nabla-containers.github.io/)
+- [kata-containers](https://github.com/kata-containers)
 ### Why is important Runtime Security?
 - Detection of IOC (Indicator Of Compromise)
 - Detect Zero Days attack
