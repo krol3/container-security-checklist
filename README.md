@@ -248,11 +248,16 @@ Enable detection of anomalous behaviour in applications.
       . Docker Content Trust implements [The Update Framework](https://theupdateframework.io/) (TUF)
       . Powered by [Notary](https://github.com/notaryproject/notary), an open-source TUF-client and server that can operate over arbitrary trusted collections of data.
 
+- [x] Do not run Docker without the default **seccomp profile**: `seccomp=unconfined`
+
+> - [Seccomp enabled by default](https://docs.docker.com/engine/security/seccomp/). See the Docker profile [here](https://docs.docker.com/engine/security/seccomp/)
+> - [Hardening Docker and Kubernetes with seccomp](https://martinheinz.dev/blog/41)
+
 **More Material about Docker Security**
 - [Docker Security Labs](https://github.com/docker/labs/tree/master/security)
 - [CIS Docker Bench](https://github.com/docker/docker-bench-security).
 - [Content trust in Docker](https://docs.docker.com/engine/security/trust/)
-
+- [Docker Security Playground - DSP](https://github.com/DockerSecurityPlayground/DSP) - Network Security and Penetration Test techniques
 ## Secure the Infrastructure
 
 **Risk:**
