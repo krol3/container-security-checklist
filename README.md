@@ -2,9 +2,10 @@
 
 # Table Of Contents
 
-  - [Cloud Native Concepts](#cloud-native-concepts)
+  - [Cloud Native challenges](#cloud-native-challenges)
   - [Container Threat Model](#container-threat-model)
   - [Container Security Checklist](#container-security-checklist)
+  - [Supply Chain Security](#supply-chain-security)
   - [Secure the Build](#secure-the-build)
     - [Secure Supply Chain](#secure-supply-chain)
     - [Hardening Code - Secure SDLC (Software Development Life Cycle)](#hardening-code---secure-sdlc-software-development-life-cycle)
@@ -28,17 +29,18 @@
 
 ---
 
-## Cloud Native Concepts
+## Cloud Native challenges
 
 | Legacy apps   |      Cloud Native apps      |  Cloud Native Security |
 |----------|:-------------:|------:|
-| Infrequent releases |  frequently releases, using CI/CD | Shifting left with automated testing |
+| Infrequent releases |   frequent releases, using CI/CD | Shifting left with automated testing |
 | Persistent workloads |  Ephemeral workloads. Ensure that your containers are stateless and immutable |  Runtime controls that follow the workload |
 | Fixed address | Orchestrated containers. Kubernetes creates DNS records for services and pods |   Identity-based segmentation |
 | Hypervisor or hardware isolation | Shared kernel, obscured OS | Enforce least privilege on each workload |
 | Very little open source | Open source everywhere | SCA - Software composition analysis |
-| Propietary software | Proprietary code, Open source, Third-party software |  Software supply chain risk |
-| Vertical control of the stack | multi-cloud | Detecting cloud services missconfigurations |
+| Proprietary software | Proprietary code, Open source, Third-party software |  Software supply chain risk |
+| Vertical control of the stack | multi-cloud | Detecting cloud services misconfigurations |
+| Networking monitoring and threat detection tools were based on auditd, syslog, dead-disk forensics, and it used to get the full contents of network packets to disk "packet captures". Capturing packets sotes every packet in a network to disk and runs custom pattern matching on each packet to identify an attack. | Cloud native apps the traffic is encrypted. Packet captures are too costly and ineffective for cloud native environments. | Using eBPF programs, you collect the events in real time without disruption to the app. |
 
 > Table by Aqua Cloud Native Security Platform, more details [download here](https://f.hubspotusercontent40.net/hubfs/1665891/Buyers_Guide/Aqua_Buyers_Guide_Cloud_Native_Security_Platform.pdf)
 ## Container Threat Model
@@ -70,10 +72,20 @@ Checklist to build and secure the images across the following phases:
 Figure by [cncf/tag-security](https://github.com/cncf/sig-security/)
 
 ---
+
+## Supply Chain Security
+
+- Enforce image trust with Image signing: Container Signing, Verification and Storage in an OCI registry.
+### Image Signing
+
+Sign and verify images to mitigate a man in the middle (MITM) attack. Docker offers a Content Trust mechanism that allows you to cryptographically sign images using a private key. This guarantees the image, and its tags, have not been modified.
+
+- [Notary](https://github.com/notaryproject/notaryproject). Implementation of TUF specification.
+- [sigstore/Cosign](https://github.com/sigstore/cosign)
+- [Sigstore: A Solution to Software Supply Chain Security](https://itnext.io/sigstore-a-solution-to-software-supply-chain-security-35bc96bddad5)
+- [Zero-Trust supply chains with Sigstore and SPIFFE/SPIRE](https://github.com/sigstore/community/blob/main/docs/zero-trust-supply-chains.pdf)
 ## Secure the Build
 
-### Secure Supply Chain
-- Know where images, packages came from.
 ### Hardening Code - Secure SDLC (Software Development Life Cycle)
 - [x] Do a static analysis of the code and libraries used by the code to surface any vulnerabilities in the code and its dependencies. 
   -  Improve the security and quality of their code. [OWASP Open Source Application Security tools](https://owasp.org/www-community/Free_for_Open_Source_Application_Security_Tools): SAST, IAST.
@@ -132,20 +144,19 @@ docker images --digests
 docker pull alpine@sha256:b7233dafbed64e3738630b69382a8b231726aa1014ccaabc1947c5308a8910a7
 ```
 
-- [x] Enanbled Security profiles: SELinux, AppArmor, Seccomp.
+- [x] Enabled Security profiles: SELinux, AppArmor, Seccomp.
 
-- [x] Static code analysys tool for Dockerfile like a linter. **Detect misconfigurations**
+- [x] Static code analysis tool for Dockerfile like a linter. **Detect misconfigurations**
   - [Hadolint](https://github.com/hadolint/hadolint)
   - Packers (including encrypters), and downloaders are all able to evade static scanning by, for example, encrypting binary code that is only executed in memory, making the malware active only in runtime.
   - Trivy detect missconfigurations 
 
 ### Image Scanning
 
-- [x] Check image for Common Vulnerabilities and Exposures (CVE)
+- [x] Scan image for Common Vulnerabilities and Exposures (CVE)
 - [x] Check image for secrets
 - [x] Prevent attacks using the Supply Chain Attack
-- [x] Scan container images for CVE (Common Vulnerabilities and Exposures).
-- [x] Used dynamic analysis techniques for containers.
+- [x] Used dynamic analysis techniques for containers to prevent runtime bad behaviours. 
 
 **Container Security Scanners**
 
@@ -159,14 +170,6 @@ Comparing the container scanners results:
 - [Container Vulnerability Scanning Fun by Rory](https://raesene.github.io/blog/2020/06/21/Container_Vulnerability_Scanning_Fun/)
 - [Comparison – Anchore Engine vs Clair vs Trivy by Alfredo Pardo](https://www.a10o.net/devsecops/docker-image-security-static-analysis-tool-comparison-anchore-engine-vs-clair-vs-trivy/)
 
-### Image Signing
-
-Sign and verify images to mitigate MITM attacks. Docker offers a Content Trust mechanism that allows you to cryptographically sign images using a private key. This guarantees the image, and its tags, have not been modified.
-
-- [Notary](https://github.com/notaryproject/notaryproject). Implementation of TUF specification.
-- [sigstore/Cosign](https://github.com/sigstore/cosign)
-- [Sigstore: A Solution to Software Supply Chain Security](https://itnext.io/sigstore-a-solution-to-software-supply-chain-security-35bc96bddad5)
-- [Zero-Trust supply chains with Sigstore and SPIFFE/SPIRE](https://github.com/sigstore/community/blob/main/docs/zero-trust-supply-chains.pdf)
 
 **More Material about build containers**
 - [Azure best practices for build containers](https://docs.microsoft.com/en-us/azure/container-registry/container-registry-best-practices)
