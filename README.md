@@ -1,6 +1,6 @@
 # Container Security Checklist: From the image to the workload
 
-# Table Of Contents
+## Table Of Contents
 
   - [Cloud Native challenges](#cloud-native-challenges)
   - [Container Threat Model](#container-threat-model)
@@ -23,7 +23,7 @@
     - [Secrets Management Tools](#secrets-management-tools)
   - [Secure the Workloads... Running the containers](#secure-the-workloads-running-the-containers)
   - [Container Security Guides](#container-security-guides)
-  - [Further reading:](#further-reading)
+  - [Further reading](#further-reading)
   - [Collaborate](#collaborate)
 
 
