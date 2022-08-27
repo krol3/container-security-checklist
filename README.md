@@ -33,14 +33,15 @@
 
 | Legacy apps   |      Cloud Native apps      |  Cloud Native Security |
 |----------|:-------------:|------:|
-| Infrequent releases |   frequent releases, using CI/CD | Shifting left with automated testing |
-| Persistent workloads |  Ephemeral workloads. Ensure that your containers are stateless and immutable |  Runtime controls that follow the workload |
-| Fixed address | Orchestrated containers. Kubernetes creates DNS records for services and pods |   Identity-based segmentation |
-| Hypervisor or hardware isolation | Shared kernel, obscured OS | Enforce least privilege on each workload |
+| Discrete, infrequent releases |   frequent releases, using CI/CD | Shifting left with automated testing |
 | Very little open source | Open source everywhere | SCA - Software composition analysis |
 | Proprietary software | Proprietary code, Open source, Third-party software |  Software supply chain risk |
-| Vertical control of the stack | multi-cloud | Detecting cloud services misconfigurations |
+| Persistent workloads |  Ephemeral workloads. Ensure that your containers are stateless and immutable |  Runtime controls that follow the workload |
+| Hypervisor or hardware isolation | Shared kernel, obscured OS | Enforce least privilege on each workload |
+| Permanent address | Orchestrated containers. Kubernetes creates DNS records for services and pods |   Identity-based segmentation |
+| Vertical control of the stack | multi-cloud | Detecting cloud services misconfigurations (CSPM) |
 | Networking monitoring and threat detection tools were based on auditd, syslog, dead-disk forensics, and it used to get the full contents of network packets to disk "packet captures". Capturing packets sotes every packet in a network to disk and runs custom pattern matching on each packet to identify an attack. | Cloud native apps the traffic is encrypted. Packet captures are too costly and ineffective for cloud native environments. | Using eBPF programs, you collect the events in real time without disruption to the app. |
+
 
 > Table by Aqua Cloud Native Security Platform, more details [download here](https://f.hubspotusercontent40.net/hubfs/1665891/Buyers_Guide/Aqua_Buyers_Guide_Cloud_Native_Security_Platform.pdf)
 ## Container Threat Model
