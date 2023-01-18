@@ -22,6 +22,7 @@
   - [Secure the Data](#secure-the-data)
     - [Secrets Management Tools](#secrets-management-tools)
   - [Secure the Workloads... Running the containers](#secure-the-workloads-running-the-containers)
+  - [Common Containers Attacks](#common-container-attacks)
   - [Container Security Guides](#container-security-guides)
   - [Further reading](#further-reading)
   - [Collaborate](#collaborate)
@@ -359,6 +360,10 @@ docker run -d --name container-1 --cpuset-cpus 0 --cpu-shares 768 cpu-stress
 - [x] Confirms Inmutability. Implement drift prevention to ensure container inmutability.
 - [x] Ensure you have robust auditing and forensics for quick troubleshooting and compliance reporting.
 
+## Common Containers Attacks
+- Unsecured Docker daemons
+  - [Cetus: Cryptojacking Worm Targeting Docker Daemons](https://unit42.paloaltonetworks.com/cetus-cryptojacking-worm/)  
+  - [Black-T: New Cryptojacking Variant from TeamTNT](https://unit42.paloaltonetworks.com/black-t-cryptojacking-variant/) 
 ## Container Security Guides
 
 * [SP 800-190 - Application Container Security Guide by NIST](https://csrc.nist.gov/publications/detail/sp/800-190/final)
