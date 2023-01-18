@@ -46,7 +46,7 @@
 > Table by Aqua Cloud Native Security Platform, more details [download here](https://f.hubspotusercontent40.net/hubfs/1665891/Buyers_Guide/Aqua_Buyers_Guide_Cloud_Native_Security_Platform.pdf)
 ## Container Threat Model
 
-[![thread-model](https://www.oreilly.com/library/view/container-security/9781492056690/assets/cose_0101.png)](https://medium.com/oreillymedia/container-security-threats-38649261fb4f)
+[![thread-model](https://miro.medium.com/max/4800/0*PGj_8b4bt5F5F6LR)](https://medium.com/oreillymedia/container-security-threats-38649261fb4f)
 Figure by [Container Security by Liz Rice](https://www.oreilly.com/library/view/container-security/9781492056690/)
 
 - Insecure Host
