@@ -372,6 +372,7 @@ docker run -d --name container-1 --cpuset-cpus 0 --cpu-shares 768 cpu-stress
 - [Using seccomp to limit the kernel attack surface](https://man7.org/conf/lpc2015/limiting_kernel_attack_surface_with_seccomp-LPC_2015-Kerrisk.pdf)
 - [Docker Security Best Practices by Rani Osnat - AquaSecurity](https://blog.aquasec.com/docker-security-best-practices)
 - [Applying devsecops in a Golang app with trivy-github-actions by Daniel Pacak - AquaSecurity](https://blog.aquasec.com/devsecops-with-trivy-github-actions)
+- [21 Docker Security Best Practices – Deamon, Image & Container by James Walker - Spacelift](https://spacelift.io/blog/docker-security)
 
 ## Collaborate
 
