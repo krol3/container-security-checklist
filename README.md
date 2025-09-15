@@ -305,6 +305,7 @@ to run on a container can directly affect the host.
 Open source tools:
 - [detect-secrets by Yelp](https://github.com/Yelp/detect-secrets): detecting and preventing secrets in code.
 - [git-secrets by awslabs](https://github.com/awslabs/git-secrets#nix-linux-macos): Prevents you from committing secrets and credentials into git repositories
+- [Gitleaks](https://github.com/gitleaks/gitleaks): detecting and preventing secrets in code with Gitleaks. Enrich the Gitleaks ruleset with [ndaal secretes search by ndaal](https://gitlab.com/ndaal_open_source/ndaal_secretes_search)
 
 Cloud Provider Key Management
 - [AWS Secrets Manager](https://aws.amazon.com/secrets-manager/)
